@@ -1,0 +1,11 @@
+# node
+node_modules
+
+# app
+_data
+logs
+dist
+
+# config
+*.env
+!example.env
