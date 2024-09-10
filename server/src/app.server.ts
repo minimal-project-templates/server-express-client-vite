@@ -1,13 +1,14 @@
 import { json, urlencoded } from 'body-parser'
 import express, { Application } from 'express'
+import { readFileSync } from 'fs'
 import helmet from 'helmet'
+import http from 'http'
+import https from 'https'
+import { join } from 'path'
 import { App } from './app'
 import { APP_CONFIG } from './app.config'
 import { logger } from './util/logger'
-import { join } from 'path'
-import { readFileSync } from 'fs'
-import https from 'https'
-import http from 'http'
+import { engine } from 'express-handlebars'
 
 export class AppServer {
   private expressApp: Application
@@ -21,6 +22,12 @@ export class AppServer {
     this.expressApp.use(json())
     this.expressApp.use(urlencoded({ extended: true }))
     this.expressApp.use(express.static(APP_CONFIG.server.paths.client))
+
+    if (APP_CONFIG.server.render?.ssr !== false) {
+      this.expressApp.engine('handlebars', engine())
+      this.expressApp.set('view engine', 'handlebars')
+      this.expressApp.set('views', './views')
+    }
   }
 
   async start() {
@@ -28,13 +35,15 @@ export class AppServer {
       const PORT = APP_CONFIG.server.port
       const HOST = APP_CONFIG.server.host
 
+      // do special stuff, depending on PROD or DEV
       if (APP_CONFIG.env.prod) {
         this.startProdMode()
       } else {
         this.startDevMode()
       }
 
-      this.expressApp.listen(PORT, HOST, () => {
+      // start listening
+      this.server.listen(PORT, HOST, () => {
         logger.info(`Server is running at ${this.protocol}://${HOST}:${PORT}`)
         resolve(true)
       })

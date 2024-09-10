@@ -8,9 +8,12 @@ export const APP_CONFIG = {
     port: +process.env['PUBLIC_SERVER_PORT'],
     host: process.env['PUBLIC_SERVER_HOST'],
     paths: {
-      client: join(__dirname, '..', process.env['PUBLIC_SERVER_CLIENT_PATH']),
+      client: join(__dirname, '../..', process.env['PUBLIC_SERVER_CLIENT_PATH']),
       logs: join(__dirname, '../../_data/logs'),
       certs: join(__dirname, '../../certs'),
+    },
+    render: {
+      ssr: false
     }
   }
 }
