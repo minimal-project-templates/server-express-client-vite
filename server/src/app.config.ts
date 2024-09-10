@@ -10,6 +10,7 @@ export const APP_CONFIG = {
     paths: {
       client: join(__dirname, '..', process.env['PUBLIC_SERVER_CLIENT_PATH']),
       logs: join(__dirname, '../../_data/logs'),
+      certs: join(__dirname, '../../certs'),
     }
   }
 }

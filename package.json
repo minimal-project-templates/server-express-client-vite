@@ -7,7 +7,8 @@
     "postinstall": "cd client && npm i && cd ../server && npm i",
     "start": "npm run server:start & npm run client:start",
     "prod": "npm run client:build && npm run server:prod",
-    "stop": "forever stop 0",
+    "stop": "npm run server:stop",
+    "kill": "cd server && npm run kill",
     "client:start": "cd client && npm start",
     "client:build": "cd client && npm run build",
     "server:start": "cd ./server && npm start",
@@ -20,9 +21,9 @@
     "forever": "^4.0.3"
   },
   "devDependencies": {
+    "@types/node": "^20.11.17",
     "eslint": "^9.8.0",
     "eslint-config-prettier": "^9.1.0",
-    "@types/node": "^20.11.17",
     "prettier": "^2.6.2",
     "prettier-plugin-organize-imports": "^4.0.0",
     "ts-node": "^10.9.2"

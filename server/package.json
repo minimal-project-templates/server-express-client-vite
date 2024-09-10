@@ -5,7 +5,10 @@
   "scripts": {
     "start": "node --env-file=../.env --watch -r ts-node/register src/index.ts",
     "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prod": "forever start ./dist/index.js",
+    "stop": "forever stopall",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "kill": "kill -9 $(lsof -i:3000 -t)"
   },
   "author": "",
   "license": "ISC",
