@@ -5,7 +5,7 @@ export function startMouseGlow() {
   if (!el) {
     el = document.createElement('div')
     el.id = 'neon-container'
-    el.className= 'd-none d-md-block'
+    el.className= 'd-none d-md-block position-fixed'
     document.body.prepend(el)
   }
 

@@ -1,0 +1,80 @@
+@import '../../styles/style';
+
+/* gap */
+.demo-gap {
+  padding: 50px;
+  overflow: hidden;
+}
+.demo-gap h1,
+.demo-gap h2,
+.demo-gap h3 {
+  text-align: center;
+}
+.demo-gap .container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Demo Content */
+.demo-content {
+  padding: 80px;
+}
+
+
+/* Float */
+.demo-float-left {
+  float: left;
+}
+.demo-float-right {
+  float: right;
+}
+
+
+/* Mobile */
+@media screen and (max-width: 500px) {
+  .demo-gap,
+  .demo-content {
+      padding: 50px 30px;
+  }
+}
+
+.jarallax-img-dude {
+  object-position: 50% 100% !important;
+}
+
+
+/* hero block */
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 500px;
+  height: calc(100vh - 220px);
+}
+.hero h1 {
+  font-size: 80px;
+  font-size: clamp(32px,7.5vw,80px);
+  max-width: 1200px;
+  margin: 0 auto;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  font-weight: 800;
+}
+.hero.jarallax > .jarallax-img img,
+.hero.jarallax > .jarallax-container img {
+  filter: blur(3px);
+}
+.hero-name {
+  font-size: 20px;
+  font-size: clamp(17px,2vw,20px);
+  font-weight: 300;
+  // letter-spacing: 1.1em;
+  letter-spacing: 0.3em;
+  // letter-spacing: clamp(1em,2vw,1.1em);
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+.hero + .demo-gap {
+  min-height: 230px;
+}

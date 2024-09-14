@@ -11,7 +11,8 @@
   },
   "dependencies": {
     "bootstrap": "^5.3.3",
-    "jarallax": "^2.2.1"
+    "jarallax": "^2.2.1",
+    "jquery": "^3.7.1"
   },
   "devDependencies": {
     "sass": "^1.78.0",

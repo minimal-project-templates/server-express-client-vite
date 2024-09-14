@@ -1,0 +1,61 @@
+.glow-ball {
+  width: 1px;
+  height: 1px;
+  border-radius: 50%;
+  transition: all 3s ease;
+  position: absolute;
+  overflow: hidden;
+
+  &.night {
+    background: rgba(139, 92, 246, 0.1);
+    box-shadow:
+    0 0 60px 30px rgba(255, 255, 237, 0.4),  /* Outer glow */
+    0 0 100px 60px rgb(139, 92, 246), /* Middle glow */
+    0 0 140px 90px rgb(167, 139, 250); /* Inner glow */
+  }
+
+  &.day {
+    box-shadow:
+    0 0 60px 30px rgba(207, 207, 19, 0.918),  /* Outer glow */
+    0 0 100px 60px rgb(140, 206, 19), /* Middle glow */
+    0 0 140px 90px rgb(167, 139, 250); /* Inner glow */
+  }
+
+  &.rain {
+    #rainCanvas {
+      opacity: 1
+    }
+  }
+
+  &.glow-ball-left {
+    top: calc(100vh - 100px);
+  }
+
+  &.glow-ball-right {
+    left: auto;
+    right: 70px;
+    top: 200px;
+  }
+}
+
+.glow-ball::after {
+  content: "";
+  position: absolute;
+  top: 5%;
+  left: 10%;
+  width: 40%;
+  height: 40%;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.1));
+  filter: blur(5px);
+}
+
+/* Optional: Add animation for a pulsating effect */
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+.glow-ball {
+  animation: pulse 2s infinite ease-in-out;
+}
