@@ -10,7 +10,8 @@ window.addEventListener('mousemove', event => {
 
 window.addEventListener('touchmove', event => {
   console.log(event)
-  mousePosition.x = event.touches[0].clientX;
+  mousePosition.x = event.changedTouches[0].pageX;
+  mousePosition.x = event.changedTouches[0].clientY;
   // mousePosition.x = event.clientX
   // mousePosition.y = event.clientY
 })

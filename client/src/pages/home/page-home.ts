@@ -84,11 +84,11 @@ export class PageHome {
     const effects = [renderSnowEffect, renderRainSoftEffect, renderRainHeavyEffect]
 
     renderHightWayEffect()
-    glowBallEffect()
+    // glowBallEffect()
 
     effects.forEach(effect => {
       if (getRandomBool()) {
-        effect(getRandomAmount())
+        // effect(getRandomAmount())
       }
     })
 
