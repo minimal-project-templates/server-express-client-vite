@@ -8,6 +8,13 @@ window.addEventListener('mousemove', event => {
   mousePosition.y = event.clientY
 })
 
+window.addEventListener('touchmove', event => {
+  console.log(event)
+  mousePosition.x = event.touches[0].clientX;
+  // mousePosition.x = event.clientX
+  // mousePosition.y = event.clientY
+})
+
 export function getWeatherState() {
   const now = new Date()
   const seconds = now.getSeconds()
