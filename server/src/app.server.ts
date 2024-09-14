@@ -9,6 +9,7 @@ import { App } from './app'
 import { APP_CONFIG } from './app.config'
 import { logger } from './util/logger'
 import { engine } from 'express-handlebars'
+import compression from 'compression'
 
 export class AppServer {
   private expressApp: Application
@@ -19,6 +20,7 @@ export class AppServer {
 
   init() {
     this.expressApp = express()
+    this.expressApp.use(compression())
     this.expressApp.use(json())
     this.expressApp.use(urlencoded({ extended: true }))
     this.expressApp.use(express.static(APP_CONFIG.server.paths.client))
