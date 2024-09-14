@@ -1,5 +1,5 @@
 import { jarallax } from 'jarallax'
-import $ from 'jquery'
+// import $ from 'jquery'
 import { glowBallEffect } from '../../effects/glow-ball.ts'
 import { renderHightWayEffect } from '../../effects/highway.ts'
 import { startMouseGlow } from '../../effects/mouse-glow.ts'
@@ -9,9 +9,9 @@ import { renderSnowEffect } from '../../effects/snow.ts'
 import { getRandomAmount, getRandomBool } from '../../util/util.ts'
 import './page-home.scss'
 
-$(window).on('beforeunload', function () {
-  $(window).scrollTop(0)
-})
+// $(window).on('beforeunload', function () {
+//   $(window).scrollTop(0)
+// })
 
 window.addEventListener('click', () => {
   var myVideo = document.getElementById('video') as HTMLVideoElement;
