@@ -1,12 +1,4 @@
-let mouse = {
-  x: 2,
-  y: 0,
-}
-
-window.addEventListener('mousemove', event => {
-  mouse.x = event.clientX
-  mouse.y = event.clientY
-})
+import { mousePosition } from "./effect"
 
 export function renderRainSoftEffect(amount: number) {
   const canvas = document.getElementById('rainCanvas') as HTMLCanvasElement
@@ -42,7 +34,7 @@ export function renderRainSoftEffect(amount: number) {
         this.y = 0 - this.length
       }
 
-      if (mouse.x < canvas.width / 2) {
+      if (mousePosition.x < canvas.width / 2) {
         this.x -= this.speed
       } else {
         this.x += this.speed
@@ -56,8 +48,8 @@ export function renderRainSoftEffect(amount: number) {
       }
 
       // Follow mouse with slight delay
-      let dx = mouse.x - this.x
-      let dy = mouse.y - this.y
+      let dx = mousePosition.x - this.x
+      let dy = mousePosition.y - this.y
       // this.x += dx * 0.001;
       // this.y += dy * 0.005;
     }
