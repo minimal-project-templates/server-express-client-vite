@@ -4,7 +4,7 @@
 .demo-gap {
   padding: 50px;
   overflow: hidden;
-  // background-color: black;
+  background-color: black;
 }
 .demo-gap h1,
 .demo-gap h2,
@@ -51,7 +51,7 @@
   justify-content: center;
   text-align: center;
   min-height: 500px;
-  height: calc(100vh - 220px);
+  // height: calc(100vh - 220px);
 }
 .hero h1 {
   font-size: 80px;
