@@ -36,7 +36,7 @@ export function renderSnowEffect(amount: number) {
       this.x = Math.random() * canvas.width
       this.y = Math.random() * canvas.height
       this.radius = Math.random() * 2 + 1
-      this.color = `rgba(0, 255, 255, ${Math.random()})`
+      this.color = `rgba(200, 255, 255, ${Math.random()})`
       this.dy = Math.random() * 1 + 0.5
       this.dx = (Math.random() - 0.5) * 2
       this.flicker = Math.random() * 0.1 + 0.05

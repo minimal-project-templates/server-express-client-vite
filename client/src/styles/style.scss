@@ -31,27 +31,9 @@ canvas {
 .tardis-img {
   // position: absolute; 
   z-index: -1;
-  height: 200px;
+  height: 150px;
   // left: 220px;
   // top: 140px;
-}
-
-.project-block {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  background-color: black;
-  padding: 10px;
-  text-align: center;
-  border: 1px solid white;
-  transition: border 0.2s ease;
-  padding: 70px;
-  margin-bottom: 40px;
-
-  &:hover {
-    border-color: purple;
-  }
 }
 
 /* Lighter background */

@@ -15,7 +15,7 @@ export function renderRainSoftEffect(amount: number) {
   canvas.width = window.innerWidth
   canvas.height = window.innerHeight
 
-  const raindropsAmount = amount
+  const raindropsAmount = Math.round(amount * 0.5)
 
   class Raindrop {
     private x: number

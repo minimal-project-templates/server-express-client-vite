@@ -5,7 +5,8 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MCC - The DePIN TARDIS</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   </head>
   <body>
     <div class="glow-ball glow-ball-left night"></div>
@@ -15,68 +16,26 @@
     <canvas id="starCanvas"></canvas>
     <canvas id="rainCanvas" class="show"></canvas>
 
-    <div id="app" style="z-index: 1; position: relative; display: none !important; position: relative">
-      <!-- header -->
-      <nav class="navbar navbar-expand-lg bg-dark d-none">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">Tardis</a>
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
-              </li>
-              <!-- <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-              </li>
-              <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Dropdown </a>
-                <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">Action</a></li>
-                  <li><a class="dropdown-item" href="#">Another action</a></li>
-                  <li><hr class="dropdown-divider" /></li>
-                  <li><a class="dropdown-item" href="#">Something else here</a></li>
-                </ul>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link disabled">Disabled</a>
-              </li> -->
-            </ul>
-          </div>
-        </div>
-      </nav>
-
+    <div id="app" style="z-index: 1; visibility: hidden; position: relative">
+      
+      <!-- TOP SLIDE -->
       <div class="jarallax hero">
-        <img class="jarallax-img" src="images/image-1.jpg" alt="" />
         <div class="hero-content" style="position: relative; top: 50px">
-          <div class="hero-name d-flex align-items-center flex-column" style="font-weight: bold; max-width: 1000px">
+          <div class="hero-name d-flex align-items-center flex-column mb-4" style="font-weight: bold; max-width: 1000px">
             <div>
-              <img src="/tardis.png" class="tardis-img" height="200px"/>
-              <h1 class="mt-3">MCC - Tardis</h1>
+              <img src="/tardis.png" class="tardis-img" height="200px" />
+              <h1 class="mt-5">MCC - Tardis</h1>
             </div>
 
-            <h5 class="mt-5" style="border-top: 1px solid purple; padding-top: 10px">
-              <!-- Our moderation team is here to make sure this cozy little corner of Discord stays warm and safe for everyone. 🍵<br><br><br> -->
-
+            <h5 class="mt-5 pt-5 mb-4" style="border-top: 1px solid purple">
               Hello and a warm welcome to all of our new members! 👋 We're thrilled to have you join us in the DePIN TARDIS❤️
             </h5>
           </div>
 
-          <br />
           <a
             href="https://discord.gg/BNKGssFu"
             target="_blank"
-            class="btn btn-primary mt-2 w-100 d-flex align-items-center justify-content-center"
+            class="btn btn-primary btn-lg mt-2 w-100 d-flex align-items-center justify-content-center"
             style="color: white !important; background: #6a5acd !important"
           >
             <svg
@@ -102,12 +61,17 @@
             <span>Continue with Discord</span>
           </a>
 
-          <div class="mt-5" style="border: 1px solid #6a5acd !important; font-size: 24px">
-            <a>dynamic link</a>
+          <!-- DYNAMIC LINK WRAPPER-->
+          <div class="dynamic-link-wrapper">
+            <div class="mt-5 p-3" style="border: 1px solid #6a5acd !important; font-size: 24px" id="dynamicLinks">
+              <a href="">dynamic link</a>
+            </div>
           </div>
           <!-- <h1 class="mt-5">All projects</h1> -->
         </div>
       </div>
+
+
       <div class="demo-gap">
         <!-- <div class="container text-center">
           <p>
@@ -125,26 +89,8 @@
         <img class="jarallax-img" src="chart3.png" alt="" />
       </div> -->
       <div class="demo-gap">
-        <div class="container">
-          <div class="row">
-            <a class="col-12 col-md-4" href="https://hivemapper.com/" target="_blank">
-              <div class="project-block">
-                <img src="images/hivemapper.png" height="40" class="mb-3" />
-                <h4>Hivemapper</h4>
-              </div>
-            </a>
-            <a class="col-12 col-md-4" href="https://dimo.org/" target="_blank">
-              <div class="project-block">
-                <img src="images/dimo.png" height="40" class="mb-3" />
-                <h4>Dimo</h4>
-              </div>
-            </a>
-            <a class="col-12 col-md-4" href="https://www.natix.network/" target="_blank">
-              <div class="project-block">
-                <img src="images/natix.png" height="40" class="mb-3" />
-                <h4>Natix</h4>
-              </div>
-            </a>
+        <div class="container-xl pb-5">
+          <div class="row" id="projectsWrapper1">
           </div>
         </div>
       </div>
@@ -154,17 +100,14 @@
       </div>
 
       <div class="demo-gap">
-        <div class="container">
-          <div class="row">
-            <div class="col-12 col-md-4 project-block">Project</div>
-            <div class="col-12 col-md-4 project-block">Project</div>
-            <div class="col-12 col-md-4 project-block">Project</div>
-          </div>
+        <div class="container-xl pt-5 pb-5">
+          <div class="row" id="projectsWrapper2"></div>
         </div>
       </div>
 
-      <div class="jarallax" data-speed="0.78">
-        <img class="jarallax-img jarallax-img-dude" src="crypto2.jpg" alt="" />
+      <div class="jarallax" data-speed="0.78" style="position: relative;">
+        <!-- <img class="jarallax-img jarallax-img-dude" src="crypto2.jpg" alt="" /> -->
+        <video id="video" autoplay preload="auto" tabindex="-1" playsinline="" aria-label="doctor who tardis GIF" poster="https://pbs.twimg.com/tweet_video_thumb/GEarXeaWcAAAEw1.jpg" src="https://video.twimg.com/tweet_video/GEarXeaWcAAAEw1.mp4" type="video/mp4" style="width: 100%; height: 100%; position: absolute; background-color: black; top: 0%; left: 0%; transform: rotate(0deg) scale(1.005);"></video>
       </div>
 
       <div class="demo-gap demo-content lighter-bg">
@@ -212,14 +155,14 @@
         </div>
       </div>
 
-      <div class="demo-gap">
+      <!-- <div class="demo-gap">
         <h2>Self-Hosted Videos / Youtube / Vimeo</h2>
       </div>
       <div class="jarallax" data-speed="0.7" data-video-src="mp4:video/video.mp4">
         <img class="jarallax-img" src="video/video.png" alt="" loading="lazy" />
-      </div>
+      </div> -->
 
-      <main class="container d-none">
+      <!-- <main class="container d-none">
         <div class="row">
           <div class="col-4 mt-5">
             <div class="project-block">Project</div>
@@ -240,9 +183,71 @@
             <div class="project-block">Project</div>
           </div>
         </div>
-      </main>
+      </main> -->
     </div>
 
+    <template id="projectBlockTmpl">
+      <a class="col-12 col-md-4 mb-5" href="${href}" target="_blank">
+        <div class="project-block">
+          <div class="project-block-header">
+            <img src="${img}" height="70" class="mb-3" />
+            <h4>${name}</h4>
+          </div>
+
+          <p class="project-block-sub-title mt-5 pt-5">${description}</p>
+        </div>
+      </a>
+    </template>
+
+    <template id="linkSliderTmpl">
+      <a>sddsd</a>
+    </template>
+
     <script type="module" src="/src/main.ts"></script>
+
+    <script type="text/javascript">
+
+      // Step 2: Create the Scene, Camera, and Renderer
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      const renderer = new THREE.WebGLRenderer();
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
+  
+      // Step 3: Create the Highway
+      const highwayGeometry = new THREE.PlaneGeometry(10, 100);
+      const highwayMaterial = new THREE.MeshStandardMaterial({ color: 0x555555 });
+      const highway = new THREE.Mesh(highwayGeometry, highwayMaterial);
+      highway.rotation.x = -Math.PI / 2;  // Rotate the highway to be flat
+      scene.add(highway);
+  
+      // Step 4: Add Lights
+      const light1 = new THREE.PointLight(0xff0000, 1, 50);
+      const light2 = new THREE.PointLight(0xff0000, 1, 50);
+      light1.position.set(-5, 2, 0);
+      light2.position.set(5, 2, 0);
+      scene.add(light1);
+      scene.add(light2);
+  
+      // Step 5: Set Up Animation for Moving Highway
+      camera.position.z = 5;
+      function animate() {
+          requestAnimationFrame(animate);
+  
+          // Move the highway backward to create the illusion of movement
+          highway.position.z += 0.1;
+          if (highway.position.z > 50) {
+              highway.position.z = 0;
+          }
+  
+          // Move the lights to follow the highway
+          light1.position.z = highway.position.z;
+          light2.position.z = highway.position.z;
+  
+          renderer.render(scene, camera);
+      }
+      animate();
+  
+  </script>
   </body>
 </html>

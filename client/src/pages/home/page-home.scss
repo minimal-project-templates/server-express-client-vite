@@ -4,6 +4,7 @@
 .demo-gap {
   padding: 50px;
   overflow: hidden;
+  // background-color: black;
 }
 .demo-gap h1,
 .demo-gap h2,
@@ -77,4 +78,37 @@
 }
 .hero + .demo-gap {
   min-height: 230px;
+}
+
+.project-block {
+  display: flex;
+  align-items: center;
+  // justify-content: center;
+  flex-direction: column;
+  background-color: black;
+  padding: 10px;
+  text-align: center;
+  border: 1px solid white;
+  transition: all 0.2s ease;
+  padding: 30px;
+  height: 100%;
+  text-align: center;
+  text-decoration: none;
+
+  &:hover {
+    border-color: purple;
+    transform: scale(1.1);
+  }
+}
+
+.project-block-header {
+  height: 100px;
+  text-align: center;
+  text-decoration: none;
+}
+
+.project-block-sub-title {
+  border-top: 1px solid gray;
+  text-align: center;
+  text-decoration: none;
 }

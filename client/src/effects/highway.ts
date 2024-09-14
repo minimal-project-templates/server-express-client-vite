@@ -1,4 +1,6 @@
 
+import * as THREE from 'three';
+
 export function renderHightWayEffect() {
   const canvas = document.getElementById('highwayCanvas') as HTMLCanvasElement
   const ctx = canvas.getContext('2d')
@@ -99,7 +101,7 @@ export function renderHightWayEffect() {
     ctx.clearRect(0, 0, canvas.width, canvas.height)
 
     // drawSky()
-    drawStars()
+    // drawStars()
     drawRoad(time)
     drawLights(time)
 
@@ -113,3 +115,67 @@ export function renderHightWayEffect() {
 
   animate(0)
 }
+
+class Highway {
+    private scene: THREE.Scene;
+    private camera: THREE.PerspectiveCamera;
+    private renderer: THREE.WebGLRenderer;
+    private road: THREE.Mesh;
+    private lights: THREE.PointLight[] = [];
+
+    constructor() {
+        this.scene = new THREE.Scene();
+        this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        this.renderer = new THREE.WebGLRenderer();
+        this.renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(this.renderer.domElement);
+
+        this.createRoad();
+        this.createLights();
+        this.setupCamera();
+
+        this.animate();
+    }
+
+    private createRoad() {
+        const roadGeometry = new THREE.PlaneGeometry(10, 100);
+        const roadMaterial = new THREE.MeshPhongMaterial({ color: 0x333333 });
+        this.road = new THREE.Mesh(roadGeometry, roadMaterial);
+        this.road.rotation.x = -Math.PI / 2;
+        this.scene.add(this.road);
+    }
+
+    private createLights() {
+        for (let i = -45; i <= 45; i += 10) {
+            const leftLight = new THREE.PointLight(0xffff00, 1, 10);
+            leftLight.position.set(-3, 2, i);
+            this.scene.add(leftLight);
+            this.lights.push(leftLight);
+
+            const rightLight = new THREE.PointLight(0xffff00, 1, 10);
+            rightLight.position.set(3, 2, i);
+            this.scene.add(rightLight);
+            this.lights.push(rightLight);
+        }
+    }
+
+    private setupCamera() {
+        this.camera.position.z = 15;
+        this.camera.position.y = 5;
+        this.camera.lookAt(this.road.position);
+    }
+
+    private animate() {
+        requestAnimationFrame(() => this.animate());
+
+        // Animate lights (optional)
+        this.lights.forEach((light) => {
+            light.intensity = 0.5 + Math.sin(Date.now() * 0.005) * 0.5;
+        });
+
+        this.renderer.render(this.scene, this.camera);
+    }
+}
+
+// Create and initialize the highway
+const highway = new Highway();
