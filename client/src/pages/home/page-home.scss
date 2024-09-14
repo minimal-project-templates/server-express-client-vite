@@ -80,6 +80,14 @@
   min-height: 230px;
 }
 
+#projectsWrapper1 {
+  &:hover {
+    .project-block {
+      opacity: 0.4;
+      transform: scale(0.96)
+    }
+  }
+}
 .project-block {
   display: flex;
   align-items: center;
@@ -95,9 +103,18 @@
   text-align: center;
   text-decoration: none;
 
+  img {
+    transition: all 0.4s ease;
+  }
+
   &:hover {
+    opacity: 1 !important;
     border-color: purple;
-    transform: scale(1.1);
+    transform: scale(1.07) !important;
+
+    img {
+      transform: scale(1.4);
+    }
   }
 }
 

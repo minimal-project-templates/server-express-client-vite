@@ -55,7 +55,25 @@ export class PageHome {
       description: 'NATIX Network technology employs multiple decentralized data validation techniques to confirm the accuracy and authenticity of the data, ensuring its reliability and trustworthiness.',
       img: 'images/hivemapper.png',
       href: 'https://hivemapper.com/'
-    }
+    },
+    {
+      name: 'Natix',
+      description: 'Speed limits, turn restrictions, traffic lights, stop signs and exit signs detected by Hivemapper Map AI.',
+      img: 'images/natix.png',
+      href: 'https://www.natix.network/'
+    },
+    {
+      name: 'Dimo',
+      description: 'With blockchain technology, DIMO guarantees openness, fairness, and performance in ways that are impossible for traditional platforms.',
+      img: 'images/dimo.png',
+      href: 'https://dimo.org/'
+    },
+    {
+      name: 'Hivermapper',
+      description: 'NATIX Network technology employs multiple decentralized data validation techniques to confirm the accuracy and authenticity of the data, ensuring its reliability and trustworthiness.',
+      img: 'images/hivemapper.png',
+      href: 'https://hivemapper.com/'
+    },
   ]
 
   init() {
