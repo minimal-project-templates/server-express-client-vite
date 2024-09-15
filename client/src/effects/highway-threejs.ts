@@ -153,9 +153,9 @@ export async function renderHightWayEffectWebGL() {
 
   // //Create a DirectionalLight and turn on shadows for the light
   const light = new THREE.DirectionalLight(0xaafaff, 1)
-  light.position.set(200, 10, 1000) //default; light shining from top
+  light.position.set(20, 10, -100000) //default; light shining from top
   // light.castShadow = true // default false
-  // scene.add(light)
+  scene.add(light)
 
   // //Set up shadow properties for the light
   // light.shadow.mapSize.width = 512 // default
@@ -203,7 +203,7 @@ export async function renderHightWayEffectWebGL() {
     const offset = (mousePosition.x - renderer.domElement.width / 2) / 50
     // let speed = 0.1
     let whereTo = 2
-    var cameraTarget = new THREE.Vector3(offset, 5, 15)
+    var cameraTarget = new THREE.Vector3(offset / 4, 5, 15)
 
     camera.position.lerp(cameraTarget, 0.03)
     camera.lookAt(0, 0, -15)
