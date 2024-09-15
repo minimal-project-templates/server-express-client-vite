@@ -1,17 +1,14 @@
 import { jarallax } from 'jarallax'
 // import $ from 'jquery'
 import { glowBallEffect } from '../../effects/glow-ball.ts'
-import { renderHightWayEffect } from '../../effects/highway.ts'
+import { renderHightWayEffectCanvas } from '../../effects/highway-canvas.ts'
 import { startMouseGlow } from '../../effects/mouse-glow.ts'
 import { renderRainHeavyEffect } from '../../effects/rain-heavy.ts'
 import { renderRainSoftEffect } from '../../effects/rain-soft.ts'
 import { renderSnowEffect } from '../../effects/snow.ts'
 import { getRandomAmount, getRandomBool } from '../../util/util.ts'
 import './page-home.scss'
-
-// $(window).on('beforeunload', function () {
-//   $(window).scrollTop(0)
-// })
+import { renderHightWayEffectWebGL } from '../../effects/highway-threejs.ts'
 
 window.addEventListener('click', () => {
   var myVideo = document.getElementById('video') as HTMLVideoElement;
@@ -83,7 +80,8 @@ export class PageHome {
   onDOMLoaded() {
     const effects = [renderSnowEffect, renderRainSoftEffect, renderRainHeavyEffect]
 
-    renderHightWayEffect()
+    // renderHightWayEffectCanvas()
+    renderHightWayEffectWebGL()
     // glowBallEffect()
 
     effects.forEach(effect => {

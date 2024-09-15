@@ -54,8 +54,8 @@
   // height: calc(100vh - 220px);
 }
 .hero h1 {
-  font-size: 80px;
-  font-size: clamp(32px,7.5vw,80px);
+  font-size: 40px;
+  // font-size: clamp(32px,7.5vw,80px);
   max-width: 1200px;
   margin: 0 auto;
   line-height: 1;
