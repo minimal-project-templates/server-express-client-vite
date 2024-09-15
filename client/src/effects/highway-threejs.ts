@@ -163,7 +163,7 @@ export async function renderHightWayEffectWebGL() {
     cars.forEach(car => {
       // Move cars
       if (car.position.x > 0) {
-        car.position.z += 0.2
+        car.position.z += 0.4
         if (car.position.z > 100) car.position.z = -100
       } else {
         car.position.z -= 0.2
