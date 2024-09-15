@@ -71,7 +71,7 @@ async function renderStreetLights(scene: THREE.Scene, objLoader: OBJLoader, mtlL
 
   objLoader.setMaterials(materials)
   const streetLightObj = await objLoader.loadAsync('models/streetlight/streetlight.obj')
-  const lights: any[] = []
+  const lights: THREE.PointLight[] = []
 
   function add(side: 'LEFT' | 'RIGHT', z: number) {
     // pole
@@ -80,7 +80,7 @@ async function renderStreetLights(scene: THREE.Scene, objLoader: OBJLoader, mtlL
     object.position.set(x, 0, z)
     object.scale.set(3, 3, 3)
     object.rotation.y = side === 'RIGHT' ? Math.PI : 0
-    lights.push(object)
+    lights.push(object as any)
     scene.add(object)
 
     // light
@@ -105,7 +105,7 @@ async function renderStreetLights(scene: THREE.Scene, objLoader: OBJLoader, mtlL
 }
 
 export async function renderHightWayEffectWebGL() {
-  const speed = 0.1
+  const speed = 0.2
 
   // Set up loaders
   const OBJLoaderRef = new OBJLoader()
@@ -184,13 +184,21 @@ export async function renderHightWayEffectWebGL() {
     }
 
     // Move each light and pole towards the camera
-    lights.forEach(light => {
+    lights.forEach((light, index) => {
       light.position.z += speed
       // console.log( light.position.z < (camera.position.z) - 100)
       light.castShadow = light.position.z < camera.position.z && light.position.z > camera.position.z - 100
       if (light.position.z > 50) {
         light.position.z = -160 // Reset to the start of the road
+        // light.lookAt(0, 0,  light.position.z)
       }
+
+
+      if (light.isLight && index === 11) {
+        console.log(light)
+        light.color = new THREE.Color('black')
+      }
+
     })
     const offset = (mousePosition.x - renderer.domElement.width / 2) / 50
     // let speed = 0.1
@@ -198,6 +206,7 @@ export async function renderHightWayEffectWebGL() {
     var cameraTarget = new THREE.Vector3(offset, 5, 15)
 
     camera.position.lerp(cameraTarget, 0.03)
+    camera.lookAt(0, 0, -15)
 
     // camera.position.set(offset, 5, 15)
 
