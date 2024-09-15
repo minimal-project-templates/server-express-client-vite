@@ -171,10 +171,10 @@ export async function renderHightWayEffectWebGL() {
       // Move cars
       if (car.position.x > 0) {
         car.position.z += 0.4
-        if (car.position.z > 100) car.position.z = -100
+        if (car.position.z > 20) car.position.z = -150
       } else {
         car.position.z -= 0.2
-        if (car.position.z < -100) car.position.z = 100
+        if (car.position.z < -150) car.position.z = 20
       }
     })
 
@@ -189,7 +189,7 @@ export async function renderHightWayEffectWebGL() {
       // console.log( light.position.z < (camera.position.z) - 100)
       light.castShadow = light.position.z < camera.position.z && light.position.z > camera.position.z - 100
       if (light.position.z > 50) {
-        light.position.z = -200 // Reset to the start of the road
+        light.position.z = -160 // Reset to the start of the road
       }
     })
     const offset = (mousePosition.x - renderer.domElement.width / 2) / 50
