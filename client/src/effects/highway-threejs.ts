@@ -185,7 +185,7 @@ export async function renderHightWayEffectWebGL() {
     const offset = (mousePosition.x - renderer.domElement.width / 2) / 50
     // let speed = 0.1
     let whereTo = 2
-    var cameraTarget = new THREE.Vector3(offset, 4, 4)
+    var cameraTarget = new THREE.Vector3(offset, 5, 15)
 
     camera.position.lerp(cameraTarget, 0.01)
 
