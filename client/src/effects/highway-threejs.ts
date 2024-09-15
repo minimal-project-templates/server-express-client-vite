@@ -5,42 +5,11 @@ import { OBJLoader } from 'three/addons/loaders/OBJLoader.js'
 import { mousePosition } from './effect'
 import { getRandomAmount, getRandomBool } from '../util/util'
 
-function onDocumentMouseMove( event ) {
-
-  event.preventDefault();
-
-  if ( isMouseDown ) {
-
-      theta = - ( ( event.clientX - onMouseDownPosition.x ) * 0.5 )
-              + onMouseDownTheta;
-      phi = ( ( event.clientY - onMouseDownPosition.y ) * 0.5 )
-            + onMouseDownPhi;
-
-      phi = Math.min( 180, Math.max( 0, phi ) );
-
-      camera.position.x = radious * Math.sin( theta * Math.PI / 360 )
-                          * Math.cos( phi * Math.PI / 360 );
-      camera.position.y = radious * Math.sin( phi * Math.PI / 360 );
-      camera.position.z = radious * Math.cos( theta * Math.PI / 360 )
-                          * Math.cos( phi * Math.PI / 360 );
-      camera.updateMatrix();
-
+addEventListener('wheel', function (event) {
+  if (event.buttons & 1) {
+console.log
   }
-
-  mouse3D = projector.unprojectVector(
-      new THREE.Vector3(
-          ( event.clientX / renderer.domElement.width ) * 2 - 1,
-          - ( event.clientY / renderer.domElement.height ) * 2 + 1,
-          0.5
-      ),
-      camera
-  );
-  ray.direction = mouse3D.subSelf( camera.position ).normalize();
-
-  interact();
-  render();
-
-}
+})
 
 function renderSkyBox(scene: THREE.Scene, loader: THREE.CubeTextureLoader) {
   loader.setPath('images/')
@@ -107,7 +76,7 @@ async function renderStreetLights(scene: THREE.Scene, objLoader: OBJLoader, mtlL
 
     // light
     const sphere = new THREE.SphereGeometry(0.4, 5, 8)
-    const light = new THREE.PointLight('#6a5acd', 100, 700)
+    const light = new THREE.PointLight('#6a5acd', 300, 700)
     const lightMesh = new THREE.Mesh(sphere, new THREE.MeshBasicMaterial({ color: 'white' }))
     light.add(lightMesh)
     light.position.x = side === 'LEFT' ? x + 1.2 : x - 1.2
@@ -175,17 +144,17 @@ export async function renderHightWayEffectWebGL() {
 
   const cars = renderCars(scene, textureLoader, 20)
 
-  //Create a DirectionalLight and turn on shadows for the light
+  // //Create a DirectionalLight and turn on shadows for the light
   const light = new THREE.DirectionalLight(0xffffff, 1)
   light.position.set(200, 10, 1000) //default; light shining from top
-  light.castShadow = true // default false
-  scene.add(light)
+  // light.castShadow = true // default false
+  // scene.add(light)
 
-  //Set up shadow properties for the light
-  light.shadow.mapSize.width = 512 // default
-  light.shadow.mapSize.height = 512 // default
-  light.shadow.camera.near = 0.5 // default
-  light.shadow.camera.far = 500 // default
+  // //Set up shadow properties for the light
+  // light.shadow.mapSize.width = 512 // default
+  // light.shadow.mapSize.height = 512 // default
+  // light.shadow.camera.near = 0.5 // default
+  // light.shadow.camera.far = 500 // default
 
   // Animation loop
   function animate() {
@@ -200,8 +169,6 @@ export async function renderHightWayEffectWebGL() {
         car.position.z -= 0.2
         if (car.position.z < -100) car.position.z = 100
       }
-
-
     })
 
     highway.position.z += speed
@@ -212,6 +179,8 @@ export async function renderHightWayEffectWebGL() {
     // Move each light and pole towards the camera
     lights.forEach(light => {
       light.position.z += speed
+      // console.log( light.position.z < (camera.position.z) - 100)
+      light.castShadow = light.position.z < camera.position.z && light.position.z > ((camera.position.z) - 100)
       if (light.position.z > 50) {
         light.position.z = -200 // Reset to the start of the road
       }
