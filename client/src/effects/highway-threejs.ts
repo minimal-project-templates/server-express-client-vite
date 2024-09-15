@@ -96,7 +96,7 @@ async function renderStreetLights(scene: THREE.Scene, objLoader: OBJLoader, mtlL
     lights.push(light)
   }
 
-  for (let i = -100; i <= 100; i += 30) {
+  for (let i = -100; i <= 100; i += 40) {
     add('LEFT', i)
     add('RIGHT', i)
   }
