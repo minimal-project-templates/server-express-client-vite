@@ -2,12 +2,12 @@ import * as THREE from 'three'
 import { FBXLoader } from 'three/addons/loaders/FBXLoader.js'
 import { MTLLoader } from 'three/addons/loaders/MTLLoader.js'
 import { OBJLoader } from 'three/addons/loaders/OBJLoader.js'
-import { mousePosition } from './effect'
 import { getRandomAmount, getRandomBool } from '../util/util'
+import { mousePosition } from './effect'
 
 addEventListener('wheel', function (event) {
   if (event.buttons & 1) {
-console.log
+    console.log
   }
 })
 
@@ -41,7 +41,7 @@ function renderCars(scene: THREE.Scene, textureLoader: THREE.TextureLoader, amou
   const cars: THREE.Mesh[] = []
 
   while (amount--) {
-    const x = getRandomBool() ? (getRandomBool() ? -20 : -15) : (getRandomBool() ? 15 : 5)
+    const x = getRandomBool() ? (getRandomBool() ? -20 : -15) : getRandomBool() ? 15 : 5
     const z = x > 0 ? getRandomAmount() : -getRandomAmount()
     const car = new THREE.Mesh(carGeometry, carMaterial)
     car.position.set(x, 0.5, z)
@@ -49,9 +49,8 @@ function renderCars(scene: THREE.Scene, textureLoader: THREE.TextureLoader, amou
     car.receiveShadow = true
     scene.add(car)
     cars.push(car)
-  
   }
-  
+
   return cars
 }
 
@@ -124,8 +123,6 @@ export async function renderHightWayEffectWebGL() {
   camera.lookAt(0, 0, 0)
   // let light1, light2, light3, light4
 
- 
-
   //   object.traverse(function (child) {
   //       if ((child as THREE.Mesh).isMesh) {
   //           // (child as THREE.Mesh).material = material
@@ -180,14 +177,19 @@ export async function renderHightWayEffectWebGL() {
     lights.forEach(light => {
       light.position.z += speed
       // console.log( light.position.z < (camera.position.z) - 100)
-      light.castShadow = light.position.z < camera.position.z && light.position.z > ((camera.position.z) - 100)
+      light.castShadow = light.position.z < camera.position.z && light.position.z > camera.position.z - 100
       if (light.position.z > 50) {
         light.position.z = -200 // Reset to the start of the road
       }
     })
-
     const offset = (mousePosition.x - renderer.domElement.width / 2) / 50
-    camera.position.set(offset, 5, 15)
+    // let speed = 0.1
+    let whereTo = 2
+    var cameraTarget = new THREE.Vector3(offset, 4, 4)
+
+    camera.position.lerp(cameraTarget, 0.01)
+
+    // camera.position.set(offset, 5, 15)
 
     renderer.render(scene, camera)
   }
