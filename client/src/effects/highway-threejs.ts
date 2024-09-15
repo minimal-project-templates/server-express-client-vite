@@ -33,17 +33,27 @@ function renderRoad(scene: THREE.Scene, textureLoader: THREE.TextureLoader) {
   return highway
 }
 
-function renderCars(scene: THREE.Scene, textureLoader: THREE.TextureLoader, amount = 20) {
+function renderCars(scene: THREE.Scene, textureLoader: THREE.TextureLoader, amount = 10) {
   // Create cars
-  const carGeometry = new THREE.BoxGeometry(2, 1, 4)
-  const carMaterial = new THREE.MeshStandardMaterial({ color: 'green' })
+  const colors = ['green', 'black', 'gray']
 
+  const carGeometry = new THREE.BoxGeometry(2, 1, 4)
+
+  const color = colors[Math.floor(Math.random()*colors.length)];
+  const carMaterial = new THREE.MeshStandardMaterial({ color })
+  const carMesh = new THREE.Mesh(carGeometry, carMaterial)
   const cars: THREE.Mesh[] = []
 
   while (amount--) {
     const x = getRandomBool() ? (getRandomBool() ? -20 : -15) : getRandomBool() ? 15 : 5
     const z = x > 0 ? getRandomAmount() : -getRandomAmount()
-    const car = new THREE.Mesh(carGeometry, carMaterial)
+    const material = carMaterial.clone()
+    // const color = x > 0 ? 'red' : 'green'
+    const color = colors[Math.floor(Math.random()*colors.length)];
+    material.color = new THREE.Color(color)
+    const car = carMesh.clone()
+    car.material = material
+
     car.position.set(x, 0.5, z)
     car.castShadow = true
     car.receiveShadow = true
@@ -75,8 +85,8 @@ async function renderStreetLights(scene: THREE.Scene, objLoader: OBJLoader, mtlL
 
     // light
     const sphere = new THREE.SphereGeometry(0.4, 5, 8)
-    const light = new THREE.PointLight('#6a5acd', 300, 700)
-    const lightMesh = new THREE.Mesh(sphere, new THREE.MeshBasicMaterial({ color: 'white' }))
+    const light = new THREE.PointLight('purple', 300, 700)
+    const lightMesh = new THREE.Mesh(sphere, new THREE.MeshBasicMaterial({ color: 'purple' }))
     light.add(lightMesh)
     light.position.x = side === 'LEFT' ? x + 1.2 : x - 1.2
     light.position.y = 5.7
@@ -139,10 +149,10 @@ export async function renderHightWayEffectWebGL() {
   const highway = renderRoad(scene, textureLoader)
   const lights = await renderStreetLights(scene, OBJLoaderRef, MTLLoaderRef)
 
-  const cars = renderCars(scene, textureLoader, 20)
+  const cars = renderCars(scene, textureLoader, 15)
 
   // //Create a DirectionalLight and turn on shadows for the light
-  const light = new THREE.DirectionalLight(0xffffff, 1)
+  const light = new THREE.DirectionalLight(0xaafaff, 1)
   light.position.set(200, 10, 1000) //default; light shining from top
   // light.castShadow = true // default false
   // scene.add(light)
