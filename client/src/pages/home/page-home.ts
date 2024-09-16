@@ -8,7 +8,7 @@ import { renderRainSoftEffect } from '../../effects/rain-soft.ts'
 import { renderSnowEffect } from '../../effects/snow.ts'
 import { getRandomAmount, getRandomBool } from '../../util/util.ts'
 import './page-home.scss'
-import { renderHightWayEffectWebGL } from '../../effects/highway-threejs.ts'
+import { Highway } from '../../effects/highway/highway.ts'
 
 window.addEventListener('click', () => {
   var myVideo = document.getElementById('video') as HTMLVideoElement;
@@ -77,11 +77,13 @@ export class PageHome {
     jarallax(document.querySelectorAll('.jarallax'), {})
   }
 
-  onDOMLoaded() {
+  async onDOMLoaded() {
     const effects = [renderSnowEffect, renderRainSoftEffect, renderRainHeavyEffect]
 
     // renderHightWayEffectCanvas()
-    renderHightWayEffectWebGL()
+    const highway = new Highway()
+    await highway.init()
+    highway.animate()
     // glowBallEffect()
 
     effects.forEach(effect => {
