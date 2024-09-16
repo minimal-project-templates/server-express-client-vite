@@ -5,7 +5,8 @@ import { OBJLoader } from 'three/addons/loaders/OBJLoader.js'
 import { getRandomAmount, getRandomBool } from '../util/util'
 import { mousePosition } from './effect'
 
-const lightColors = ['#2a5c9d', 'purple', 'white', 'gold', 'green']
+const lightColors = ['#2a5c9d', 'purple', 'gold', 'green']
+// const lightColors = ['#2a5c9d', 'purple', 'white', 'gold', 'green']
 let lightColor = lightColors[Math.floor(Math.random() * lightColors.length)]
 
 setInterval(() => {
