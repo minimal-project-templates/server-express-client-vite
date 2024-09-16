@@ -84,7 +84,7 @@ export class PageHome {
     // const highway = new Highway()
     // await highway.init()
     // highway.animate()
-    // glowBallEffect()
+    glowBallEffect()
 
     effects.forEach(effect => {
       if (getRandomBool()) {
