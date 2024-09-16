@@ -5,8 +5,12 @@ import { OBJLoader } from 'three/addons/loaders/OBJLoader.js'
 import { getRandomAmount, getRandomBool } from '../util/util'
 import { mousePosition } from './effect'
 
-const lightColors = ['#2a5c9d', 'purple', 'white']
-const lightColor = lightColors[Math.floor(Math.random()*lightColors.length)];
+const lightColors = ['#2a5c9d', 'purple', 'white', 'gold', 'green']
+let lightColor = lightColors[Math.floor(Math.random() * lightColors.length)]
+
+setInterval(() => {
+  lightColor = lightColors[Math.floor(Math.random() * lightColors.length)]
+}, 10_000)
 
 addEventListener('wheel', function (event) {
   if (event.buttons & 1) {
@@ -42,7 +46,7 @@ function renderCars(scene: THREE.Scene, textureLoader: THREE.TextureLoader, amou
 
   const carGeometry = new THREE.BoxGeometry(2, 1, 4)
 
-  const color = colors[Math.floor(Math.random()*colors.length)];
+  const color = colors[Math.floor(Math.random() * colors.length)]
   const carMaterial = new THREE.MeshStandardMaterial({ color })
   const carMesh = new THREE.Mesh(carGeometry, carMaterial)
   const cars: THREE.Mesh[] = []
@@ -52,7 +56,7 @@ function renderCars(scene: THREE.Scene, textureLoader: THREE.TextureLoader, amou
     const z = x > 0 ? getRandomAmount() : -getRandomAmount()
     const material = carMaterial.clone()
     // const color = x > 0 ? 'red' : 'green'
-    const color = colors[Math.floor(Math.random()*colors.length)];
+    const color = colors[Math.floor(Math.random() * colors.length)]
     material.color = new THREE.Color(color)
     const car = carMesh.clone()
     car.material = material
@@ -107,6 +111,30 @@ async function renderStreetLights(scene: THREE.Scene, objLoader: OBJLoader, mtlL
   return lights
 }
 
+async function renderAircraft(scene: THREE.Scene, objLoader: OBJLoader, mtlLoader: MTLLoader) {
+  // load meshes
+  // const materials = await mtlLoader.loadAsync('models/aircraft/aircraft.mtl')
+  // materials.preload()
+
+  // objLoader.setMaterials(materials)
+  const aircraftObj = await objLoader.loadAsync('models/UFO/UFO.obj')
+  aircraftObj.scale.set(0.1, 0.1, 0.1)
+  aircraftObj.position.y = 5
+  // aircraftObj.receiveShadow = true
+  // const aircraft: THREE.PointLight[] = []
+  aircraftObj.position.set(-20, 20, -30)
+
+  const light = new THREE.PointLight(lightColor, 300, 700)
+
+  light.position.set(-20, 20, -30)
+  // light.castShadow = true
+  scene.add(light)
+  
+  scene.add(aircraftObj)
+
+  return [aircraftObj, light]
+}
+
 export async function renderHightWayEffectWebGL() {
   const speed = 0.2
 
@@ -118,7 +146,7 @@ export async function renderHightWayEffectWebGL() {
   const cubeTextureLoader = new THREE.CubeTextureLoader()
 
   // Set up a renderer
-  const renderer = new THREE.WebGLRenderer()
+  const renderer = new THREE.WebGLRenderer({antialias: true})
   renderer.setSize(window.innerWidth, window.innerHeight)
   renderer.domElement.style.zIndex = '0 '
   renderer.domElement.style.top = '0'
@@ -151,8 +179,8 @@ export async function renderHightWayEffectWebGL() {
   renderSkyBox(scene, cubeTextureLoader)
   const highway = renderRoad(scene, textureLoader)
   const lights = await renderStreetLights(scene, OBJLoaderRef, MTLLoaderRef)
-
   const cars = renderCars(scene, textureLoader, 15)
+  const [aircraft, aircraftLight] = await renderAircraft(scene, OBJLoaderRef, MTLLoaderRef)
 
   // //Create a DirectionalLight and turn on shadows for the light
   const light = new THREE.DirectionalLight(0xaafaff, 1)
@@ -168,10 +196,41 @@ export async function renderHightWayEffectWebGL() {
   let flickerUntil: number
   let flickIndex: number
   let flickerState = false
-  
+
+  var xSpeed = 0.6;
+  var ySpeed = 0.6;
+  aircraft.position.set(-20, 20, -30)
+  let aircraftEndDirection = new THREE.Vector3((getRandomAmount() - 100 + 50), getRandomAmount() / 10, -(getRandomAmount() / 2))
+
+  setInterval(() => {
+    aircraftEndDirection = new THREE.Vector3((getRandomAmount() - 100 + 50), getRandomAmount() / 10, -(getRandomAmount() / 3))
+  }, 10_000)
+
+  document.addEventListener('keydown', onDocumentKeyDown, false)
+  function onDocumentKeyDown(event: any) {
+    var keyCode = event.which
+    if (keyCode == 87) {
+      aircraft.position.y += ySpeed
+    } else if (keyCode == 83) {
+      aircraft.position.y -= ySpeed
+    } else if (keyCode == 65) {
+      aircraft.position.x -= xSpeed
+    } else if (keyCode == 68) {
+      aircraft.position.x += xSpeed
+    } else if (keyCode == 32) {
+      aircraft.position.set(0, 0, 0)
+    }
+  }
+
   // Animation loop
   function animate() {
     requestAnimationFrame(animate)
+
+    aircraft.position.lerp(aircraftEndDirection, 0.003)
+    aircraftLight.position.lerp(aircraftEndDirection, 0.003)
+    aircraft.rotation.y += 0.05;
+
+    const lightColorThree = new THREE.Color(lightColor)
 
     cars.forEach(car => {
       // Move cars
@@ -199,22 +258,27 @@ export async function renderHightWayEffectWebGL() {
         // light.lookAt(0, 0,  light.position.z)
       }
 
-
       // if (light.isLight) {
-      if (light.isLight && index === 11 || index === 5) {
-        // if (!flickerUntil) {
-        if (!flickerUntil || Date.now() > flickerUntil) {
-          flickerState = !flickerState
-          flickerUntil = Date.now() + getRandomAmount() * 10
-        }
+      if (light.isLight) {
+        // light.color = lightColorThree
 
-        if (!flickerState) {
-          light.color = new THREE.Color('black')
-        } else {
-          light.color = new THREE.Color(lightColor)
+        if (index === 11 || index === 5) {
+          // if (!flickerUntil) {
+          if (!flickerUntil || Date.now() > flickerUntil) {
+            flickerState = !flickerState
+            flickerUntil = Date.now() + getRandomAmount() * 10
+          }
+
+          // const lightBulb = light.children
+          if (!flickerState) {
+            light.color = new THREE.Color('black')
+            // lightBulb.color = new THREE.Color('black')
+          } else {
+            light.color = lightColorThree
+            // lightBulb.color = new THREE.Color(lightColor)
+          }
         }
       }
-
     })
     const offset = (mousePosition.x - renderer.domElement.width / 2) / 50
     // let speed = 0.1
