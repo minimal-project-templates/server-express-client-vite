@@ -80,15 +80,15 @@ export class PageHome {
   async onDOMLoaded() {
     const effects = [renderSnowEffect, renderRainSoftEffect, renderRainHeavyEffect]
 
-    // renderHightWayEffectCanvas()
-    const highway = new Highway()
-    await highway.init()
-    highway.animate()
+    renderHightWayEffectCanvas()
+    // const highway = new Highway()
+    // await highway.init()
+    // highway.animate()
     // glowBallEffect()
 
     effects.forEach(effect => {
       if (getRandomBool()) {
-        // effect(getRandomAmount())
+        effect(getRandomAmount())
       }
     })
 

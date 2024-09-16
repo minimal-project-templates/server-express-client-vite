@@ -123,7 +123,7 @@ async function renderAircraft(scene: THREE.Scene, objLoader: OBJLoader, mtlLoade
   aircraftObj.position.y = 5
   // aircraftObj.receiveShadow = true
   // const aircraft: THREE.PointLight[] = []
-  const position = new THREE.Vector3((getRandomAmount()  * 2 - 100), getRandomAmount(), -(getRandomAmount() / 3) - 15)
+  const position = new THREE.Vector3((getRandomAmount()  * 2 - 100), getRandomAmount() / 2, -(getRandomAmount() / 3) - 45)
   aircraftObj.position.set(position.x, position.y, position.z)
   
   const lightColor =  lightColors[Math.floor(Math.random() * lightColors.length)]
