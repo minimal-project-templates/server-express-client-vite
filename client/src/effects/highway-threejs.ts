@@ -5,6 +5,9 @@ import { OBJLoader } from 'three/addons/loaders/OBJLoader.js'
 import { getRandomAmount, getRandomBool } from '../util/util'
 import { mousePosition } from './effect'
 
+const lightColors = ['#2a5c9d', 'purple', 'white']
+const lightColor = lightColors[Math.floor(Math.random()*lightColors.length)];
+
 addEventListener('wheel', function (event) {
   if (event.buttons & 1) {
     console.log
@@ -85,8 +88,8 @@ async function renderStreetLights(scene: THREE.Scene, objLoader: OBJLoader, mtlL
 
     // light
     const sphere = new THREE.SphereGeometry(0.4, 5, 8)
-    const light = new THREE.PointLight('purple', 300, 700)
-    const lightMesh = new THREE.Mesh(sphere, new THREE.MeshBasicMaterial({ color: 'purple' }))
+    const light = new THREE.PointLight(lightColor, 300, 700)
+    const lightMesh = new THREE.Mesh(sphere, new THREE.MeshBasicMaterial({ color: lightColor }))
     light.add(lightMesh)
     light.position.x = side === 'LEFT' ? x + 1.2 : x - 1.2
     light.position.y = 5.7
@@ -162,7 +165,10 @@ export async function renderHightWayEffectWebGL() {
   // light.shadow.mapSize.height = 512 // default
   // light.shadow.camera.near = 0.5 // default
   // light.shadow.camera.far = 500 // default
-
+  let flickerUntil: number
+  let flickIndex: number
+  let flickerState = false
+  
   // Animation loop
   function animate() {
     requestAnimationFrame(animate)
@@ -194,9 +200,19 @@ export async function renderHightWayEffectWebGL() {
       }
 
 
-      if (light.isLight && index === 11) {
-        console.log(light)
-        light.color = new THREE.Color('black')
+      // if (light.isLight) {
+      if (light.isLight && index === 11 || index === 5) {
+        // if (!flickerUntil) {
+        if (!flickerUntil || Date.now() > flickerUntil) {
+          flickerState = !flickerState
+          flickerUntil = Date.now() + getRandomAmount() * 10
+        }
+
+        if (!flickerState) {
+          light.color = new THREE.Color('black')
+        } else {
+          light.color = new THREE.Color(lightColor)
+        }
       }
 
     })
